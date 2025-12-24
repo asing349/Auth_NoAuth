@@ -1,0 +1,19 @@
+{
+  "url": "https://en.wikipedia.org/wiki/Main_Page",
+  "site_name": "Wikipedia",
+  "site_category": "Encyclopedia",
+  "scraped_at": "2025-12-24T04:04:58.639720+00:00",
+  "found": false,
+  "has_traditional_auth": false,
+  "has_oauth": false,
+  "traditional_auth_html": null,
+  "traditional_auth_preview": null,
+  "traditional_auth_size": null,
+  "oauth_html": null,
+  "oauth_preview": null,
+  "oauth_size": null,
+  "html_size": 679593,
+  "explanation": null,
+  "scrape_success": true,
+  "error": "Rate limit exceeded"
+}

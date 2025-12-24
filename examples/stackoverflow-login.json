@@ -1,0 +1,14 @@
+{
+  "url": "https://stackoverflow.com/users/login",
+  "site_name": "Stack Overflow",
+  "site_category": "Developer Community",
+  "scraped_at": "2025-12-24T02:33:46.845226Z",
+  "found": false,
+  "auth_html": null,
+  "auth_html_preview": null,
+  "html_size": null,
+  "auth_size": null,
+  "explanation": null,
+  "scrape_success": false,
+  "error": "Timeout: Page took longer than 30000ms to load"
+}
