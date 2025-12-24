@@ -14,22 +14,32 @@ export default function CodeDisplay({ html, title, type }: CodeDisplayProps) {
 
   // Format HTML with proper indentation
   const formatHtml = (htmlStr: string): string => {
-    const formatted = htmlStr
+    let formatted = '';
+    let indent = 0;
+    const lines = htmlStr
       .replace(/></g, '>\n<')
-      .replace(/\n\s*\n/g, '\n')
-      .split('\n')
-      .map((line, i, arr) => {
-        let indent = 0;
-        for (let j = 0; j < i; j++) {
-          const openTags = (arr[j].match(/</g) || []).length;
-          const closeTags = (arr[j].match(/>/g) || []).length;
-          const selfClosing = (arr[j].match(/\/>/g) || []).length;
-          indent += (openTags - closeTags - selfClosing);
-        }
-        return '  '.repeat(Math.max(0, indent)) + line.trim();
-      })
-      .join('\n');
-    return formatted;
+      .replace(/\s+/g, ' ')
+      .split('\n');
+
+    for (let line of lines) {
+      const trimmed = line.trim();
+      if (!trimmed) continue;
+
+      // Decrease indent for closing tags
+      if (trimmed.startsWith('</')) {
+        indent = Math.max(0, indent - 1);
+      }
+
+      // Add indented line
+      formatted += '  '.repeat(indent) + trimmed + '\n';
+
+      // Increase indent for opening tags (but not self-closing)
+      if (trimmed.startsWith('<') && !trimmed.startsWith('</') && !trimmed.endsWith('/>') && !trimmed.match(/<(input|img|br|hr|meta|link)/)) {
+        indent++;
+      }
+    }
+
+    return formatted.trim();
   };
 
   const formattedHtml = formatHtml(html);
