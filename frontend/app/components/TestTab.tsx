@@ -37,7 +37,7 @@ export default function TestTab() {
     setLoadingMessage('Scraping website...');
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      const apiUrl = 'https://authnoauth-production.up.railway.app';
       const response = await fetch(`${apiUrl}/scrape`, {
         method: 'POST',
         headers: {
