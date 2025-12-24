@@ -16,25 +16,30 @@ export default function CodeDisplay({ html, title, type }: CodeDisplayProps) {
   const formatHtml = (htmlStr: string): string => {
     let formatted = '';
     let indent = 0;
-    const lines = htmlStr
-      .replace(/></g, '>\n<')
-      .replace(/\s+/g, ' ')
-      .split('\n');
 
-    for (let line of lines) {
-      const trimmed = line.trim();
-      if (!trimmed) continue;
+    // Split by tags while preserving them
+    const parts = htmlStr.split(/(<[^>]+>)/g).filter(p => p.trim());
+
+    for (let part of parts) {
+      const trimmed = part.trim();
+      if (!trimmed || !trimmed.startsWith('<')) {
+        // Text content - just add it
+        if (trimmed) formatted += trimmed + ' ';
+        continue;
+      }
 
       // Decrease indent for closing tags
       if (trimmed.startsWith('</')) {
         indent = Math.max(0, indent - 1);
+        formatted += '\n' + '  '.repeat(indent) + trimmed;
       }
-
-      // Add indented line
-      formatted += '  '.repeat(indent) + trimmed + '\n';
-
-      // Increase indent for opening tags (but not self-closing)
-      if (trimmed.startsWith('<') && !trimmed.startsWith('</') && !trimmed.endsWith('/>') && !trimmed.match(/<(input|img|br|hr|meta|link)/)) {
+      // Self-closing or void tags
+      else if (trimmed.endsWith('/>') || trimmed.match(/^<(input|img|br|hr|meta|link|area|base|col|embed|param|source|track|wbr)/i)) {
+        formatted += '\n' + '  '.repeat(indent) + trimmed;
+      }
+      // Opening tags
+      else {
+        formatted += '\n' + '  '.repeat(indent) + trimmed;
         indent++;
       }
     }
