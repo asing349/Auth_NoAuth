@@ -1,10 +1,11 @@
 {
   "$schema": "https://railway.app/railway.schema.json",
   "build": {
-    "builder": "NIXPACKS"
+    "builder": "NIXPACKS",
+    "watchPatterns": ["backend/**"]
   },
   "deploy": {
-    "startCommand": "playwright install --with-deps chromium && uvicorn main:app --host 0.0.0.0 --port $PORT",
+    "startCommand": "cd backend && playwright install --with-deps chromium && uvicorn main:app --host 0.0.0.0 --port $PORT",
     "healthcheckPath": "/health",
     "healthcheckTimeout": 300,
     "restartPolicyType": "ON_FAILURE",
